@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'employee',
     'product',
     'user',
+    'invoice',
+    'invoiceDetail'
 ]
 
 MIDDLEWARE = [
@@ -76,7 +78,7 @@ WSGI_APPLICATION = "qlbh.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-PASSWORD_MYSQL=config('PASSWORD_MYSQL')
+PASSWORD_MYSQL = config('PASSWORD_MYSQL')
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
