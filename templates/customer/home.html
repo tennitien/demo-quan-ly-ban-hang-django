@@ -1,0 +1,47 @@
+{% extends "base/base.html" %}
+{% block content %}
+{% if objs %}
+<h1>Danh sách khách hàng:</h1>
+<br>
+<table class='table table-striped'>
+    <thead>
+        <tr>
+          <th scope="col">ID</th>
+           <th scope='col'>Mã Khách hàng</th>
+           <th scope='col'>Họ Tên</th>
+           <th scope='col'>Địa chỉ</th>
+           <th scope='col'>SĐT</th>
+           <th scope='col'>Ngày sinh</th>
+           <th scope='col'>Doanh số</th>
+           <th scope='col'>Ngày đăng ký</th>
+           <th scope='col'>Cập nhật</th>
+           <th scope='col'>Xóa</th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for obj in objs %}
+        <tr>
+            <th scope="row">{{obj.id}}</th>
+            <td>{{obj.MAKH}}</td>
+            <td>{{obj.HOTEN}}</td>
+            <td>{{obj.DCHI}}</td>
+            <td>{{obj.SODT}}</td>
+            <td>{{obj.NGSINH|date:"d/m/Y"}}</td>
+            <td>{{obj.DOANHSO}}</td>
+            <td>{{obj.NGDK|date:"d/m/Y"}}</td>
+            {% comment %} <td><a href="{% url 'customer:update' obj.id %}">Cập nhật</a></td> {% endcomment %}
+            {% comment %} <td><a href="{% url 'customer:delete' obj.id %}">Xóa</a></td> {% endcomment %}
+        </tr>
+        {% endfor %}
+        
+      </tbody>
+    </table>
+    <button type="button" class="btn btn-info">
+      <a class='text-dark text-decoration-none' href="{% url "customer:add"%}">Thêm mới</a>
+    </button>
+{% else %}
+<p>Chưa có thông tin khách hàng</p>
+{% endif %}
+{% endblock content %}

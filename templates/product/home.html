@@ -1,0 +1,40 @@
+{% extends "base/base.html" %}
+{% block content %}
+{% if objs %}
+<h1>Danh sách Sản phẩm</h1>
+<br>
+<table class='table table-striped'>
+    <thead>
+        <tr>
+          <th scope="col">ID</th>
+           <th scope='col'>Mã sản phẩm</th>
+           <th scope='col'>Tên sản phẩm</th>
+           <th scope='col'>Đơn vị tính</th>
+           <th scope='col'>Nước sản xuất</th>
+           <th scope='col'>Giá</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for obj in objs %}
+        <tr>
+            <th scope="row">{{obj.id}}</th>
+            <td>{{obj.MASP}}</td>
+            <td>{{obj.TENSP}}</td>
+            <td>{{obj.DVT}}</td>
+            <td>{{obj.NUOCSX}}</td>
+            <td>{{obj.GIA}}</td>
+            <td><a href="{% url 'product:update' obj.id%}">Cập nhật</a></td>
+            <td><a href="{% url 'product:delete' obj.id%}">Xóa</a></td>
+        </tr>
+        {% endfor %}
+        
+      </tbody>
+    </table>
+    <button type="button" class="btn btn-info">
+      <a class='text-dark text-decoration-none' href="{% url "product:add"%}">Thêm mới</a>
+    </button>
+{% else %}
+<p>Chưa có thông tin khách hàng</p>
+{% endif %}
+{% endblock content %}
