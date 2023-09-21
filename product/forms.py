@@ -1,41 +1,41 @@
 from django import forms
 from .models import SanPham
 
+
 class AddProductForm(forms.ModelForm):
     MASP = forms.CharField(
         required=True,
         widget=forms.TextInput(
-            attrs={"placeholder": "MASP", "class": "form-control"}),
-        label=""
+            attrs={"class": "form-control"}),
+        label="Mã sản phẩm"
     )
 
     TENSP = forms.CharField(
         required=True,
         widget=forms.TextInput(
-            attrs={"placeholder": "TENSP", "class": "form-control"}),
-        label=""
+            attrs={"class": "form-control"}),
+        label="Tên sản phẩm"
     )
 
     DVT = forms.CharField(
         required=True,
         widget=forms.TextInput(
-            attrs={"placeholder": "DVT", "class": "form-control"}),
-        label=""
+            attrs={"class": "form-control"}),
+        label="Đơn vị tính"
     )
 
-   
-    NUOCSX = forms.DateField(
-        required=False,
+    NUOCSX = forms.CharField(
+        required=True,
         widget=forms.DateInput(
-            attrs={"placeholder": "NUOCSX", "class": "form-control", "type": "date"}),
-        label=""
+            attrs={"class": "form-control"}),
+        label="Nước sản xuất"
     )
 
     GIA = forms.IntegerField(
         required=False,
         widget=forms.NumberInput(
-            attrs={"placeholder": "GIA", "class": "form-control"}),
-        label=""
+            attrs={"class": "form-control"}),
+        label="Giá sản phẩm"
     )
 
     class Meta:

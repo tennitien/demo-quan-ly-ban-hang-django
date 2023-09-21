@@ -6,50 +6,50 @@ class AddCustomerForm(forms.ModelForm):
     MAKH = forms.CharField(
         required=True,
         widget=forms.TextInput(
-            attrs={"placeholder": "MAKH", "class": "form-control"}),
-        label=""
+            attrs={"class": "form-control"}),
+        label="Mã khách hàng",
     )
 
     HOTEN = forms.CharField(
         required=True,
         widget=forms.TextInput(
-            attrs={"placeholder": "HOTEN", "class": "form-control"}),
-        label=""
+            attrs={"class": "form-control"}),
+        label="Họ tên"
     )
 
     DCHI = forms.CharField(
         required=True,
         widget=forms.TextInput(
-            attrs={"placeholder": "DCHI", "class": "form-control"}),
-        label=""
+            attrs={"class": "form-control"}),
+        label="Địa chỉ"
     )
 
     SODT = forms.CharField(
         required=True,
         widget=forms.TextInput(
-            attrs={"placeholder": "SODT", "class": "form-control"}),
-        label=""
+            attrs={"class": "form-control"}),
+        label="Số điện thoại"
     )
 
     NGSINH = forms.DateField(
         required=False,
         widget=forms.DateInput(
-            attrs={"placeholder": "NGSINH", "class": "form-control", "type": "date"}),
-        label=""
+            attrs={"class": "form-control", "type": "date"}),
+        label="Ngày sinh"
     )
 
     DOANHSO = forms.IntegerField(
         required=False,
         widget=forms.NumberInput(
-            attrs={"placeholder": "DOANHSO", "class": "form-control"}),
-        label=""
+            attrs={"class": "form-control"}),
+        label="Doanh số"
     )
 
     NGDK = forms.DateField(
         required=False,
         widget=forms.DateInput(
-            attrs={"placeholder": "NGDK", "class": "form-control", "type": "date"}),
-        label=""
+            attrs={"class": "form-control", "type": "date"}),
+        label="Ngày đăng ký"
     )
 
     class Meta:
