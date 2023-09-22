@@ -10,7 +10,6 @@ class KhachHang(models.Model):
     NGSINH = models.DateField(null=True)
     DOANHSO = models.IntegerField(default=0)
     NGDK = models.DateField(default=timezone.now)
-#     # billId
 
     def __str__(self) -> str:
         return (f'{self.MAKH}: {self.HOTEN}')
