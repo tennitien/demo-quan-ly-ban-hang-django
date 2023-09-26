@@ -29,7 +29,7 @@ class AddInvoiceForm(forms.ModelForm):
     TRIGIA = forms.DecimalField(
         widget=forms.NumberInput(
             attrs={"class": "form-control"}),
-        label=""
+        label="Trị giá"
     )
 
     class Meta:
