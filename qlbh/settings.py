@@ -83,7 +83,7 @@ PASSWORD_MYSQL = config('PASSWORD_MYSQL')
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "QLBH",
+        "NAME": "qlbh3",
         "USER": "root",
         "PASSWORD": PASSWORD_MYSQL,
         "HOST": "127.0.0.1",
