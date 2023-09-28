@@ -1,11 +1,11 @@
 {% extends "base/base.html" %}
 {% block form %}
-<h1 class='text-center text-primary py-2'>Thêm Sản phẩm</h1>
+<h1 class='text-center text-primary py-2'>Thêm Nhân viên</h1>
 <br>
 <form method="POST">
 	{% csrf_token %}
 	{{ form.as_p }}
-  <button type="submit" class="btn btn-secondary">Thêm</button>
+  <button type="submit" class="btn btn-secondary">Thêm mới</button>
 
 </form>
 {% endblock form %}

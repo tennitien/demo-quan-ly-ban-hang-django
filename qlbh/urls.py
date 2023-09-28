@@ -21,6 +21,7 @@ from qlbh import views
 urlpatterns = [
     # path('',include()),
     path("admin/", admin.site.urls),
+    path('nhan-vien/', include('employee.urls')),
     path('khach-hang/', include('customer.urls')),
     path('san-pham/', include('product.urls')),
     path('hoa-don/', include('invoice.urls')),
