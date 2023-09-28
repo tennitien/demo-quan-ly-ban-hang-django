@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from qlbh import views
 
 urlpatterns = [
     # path('',include()),
@@ -24,4 +25,5 @@ urlpatterns = [
     path('san-pham/', include('product.urls')),
     path('hoa-don/', include('invoice.urls')),
     path('chi-tiet-hoa-don/', include('invoiceDetail.urls')),
+    path('', views.home, name='home'),
 ]
