@@ -1,0 +1,187 @@
+
+    {% extends "base/base.html" %}
+    {% block content %}
+    <div class='title'>Báo cáo</div>
+
+    <div class='filter'>
+        <div class="label"> Từ ngày </div>
+        <input type="date" id="start-date" onchange="report()">
+        <div class="label"> Đến ngày </div>
+        <input type="date" id="end-date" onchange="report()">
+    </div>
+
+    <div class="overview">
+        <div class="section-title"> Tổng quan </div>
+        <div class="content">
+            <div>
+                <b>Tổng số đơn hàng: </b>
+                <span id="count-invoice"></span>
+            </div>
+            <div>
+                <b>Tổng số doanh thu: </b>
+                <span id="count-revenue"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="product stat" style="margin-right: 20px">
+        <div class="section-title"> Thống kê theo sản phẩm </div>
+        <div class="content">
+            <div>
+                <table id="by-product">
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="customer stat">
+        <div class="section-title"> Thống kê theo khách hàng </div>
+        <div class="content">
+            <div>
+                <table id="by-customer">
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        function report() {
+            var start_date = document.getElementById("start-date").value;
+            var end_date = document.getElementById("end-date").value;
+
+            //var json_products = "{{ products | safe }}";
+            //var all_products = JSON.parse(json_products.replace(/'/g, '"'));
+            var all_products = {{ products | safe }};
+            var all_customers = {{ customers | safe }};
+
+            var all_invoices = {{ invoices | safe }};
+            var all_invoicedetails = {{ invoicedetails | safe }};
+
+            var invoices =[];
+            all_invoices.forEach(function(e) {
+                if ((e.fields.NGHD >= start_date || !start_date) && (e.fields.NGHD <= end_date || !end_date)) {
+                    invoices.push(e)
+                }
+            });
+
+            var details = [];
+            var total = 0;
+            all_invoicedetails.forEach(function(e) {
+                var detail = {};
+                var found = 0;
+                var i=0;
+                for (i = 0; i < invoices.length; i++) {
+                    if (invoices[i].pk == e.fields.SOHD) {
+                        detail.pkHD = e.fields.SOHD;
+                        detail.pkSP = e.fields.MASP;
+                        detail.pkKH = invoices[i].fields.MAKH;
+                        detail.pkNV = invoices[i].fields.MANV;
+                        detail.SOHD = invoices[i].fields.SOHD;
+                        detail.NGHD = invoices[i].fields.NGHD;
+                        detail.SL = e.fields.SL;
+                        found = 1;
+                        break;
+                    }
+                }
+
+                if (!found) return;
+
+                var found = 0;
+                for (i=0; i < all_products.length; i++) {
+                    if (all_products[i].pk == e.fields.MASP) {
+
+                        if (!(all_products[i].fields.total)) {
+                            all_products[i].fields.total = 0;
+                        }
+                        detail.total = all_products[i].fields.GIA * detail.SL
+                        all_products[i].fields.total += detail.total;
+                        total += detail.total;
+
+                        found = 1;
+                        break;
+                    }
+                }
+
+                if (!found) return;
+
+                for (i=0; i < all_customers.length; i++) {
+                    if (all_customers[i].pk == detail.pkKH) {
+
+                        if (!(all_customers[i].fields.total)) {
+                            all_customers[i].fields.total = 0;
+                        }
+                        all_customers[i].fields.total += detail.total;
+                        break;
+                    }
+                }
+
+                details.push(detail);
+            });
+
+            document.getElementById("count-invoice").textContent = invoices.length;
+            document.getElementById("count-revenue").textContent = total;
+
+            all_customers.forEach(function(e) {
+                if (!e.fields.total) e.fields.total = 0;
+            });
+
+            all_customers.sort(function(a,b) {
+                return (b.fields.total - a.fields.total)
+            });
+
+            html_customers = `<tr>
+                        <th> STT </th>
+                        <th> Mã khách hàng</th>
+                        <th> Họ tên khách hàng </th>
+                        <th> Tổng doanh thu </th>
+                    </tr>`;
+            for (var i=0; i < Math.min(all_customers.length, 10); i++) {
+                var e = all_customers[i];
+                html_customers += `
+                    <tr>
+                        <td style="text-align: center">${i+1}</td>
+                        <td style="text-align: center">${e.fields.MAKH}</td>
+                        <td>${e.fields.HOTEN}</td>
+                        <td style="text-align: right">${e.fields.total}</td>
+                    </tr>`;
+            };
+            document.getElementById("by-customer").innerHTML = html_customers;
+
+
+            all_products.forEach(function(e) {
+                if (!e.fields.total) e.fields.total = 0;
+            });
+
+            all_products.sort(function(a,b) {
+                return (b.fields.total - a.fields.total)
+            });
+
+            html_products = `<tr>
+                        <th> STT </th>
+                        <th> Mã sản phẩm</th>
+                        <th> Tên sản phẩm </th>
+                        <th> Đơn giá </th>
+                        <th> Tổng doanh thu </th>
+                    </tr>`;
+            for (var i=0; i < Math.min(all_products.length, 10); i++) {
+                var e = all_products[i];
+                html_products += `
+                    <tr>
+                        <td style="text-align: center">${i+1}</td>
+                        <td style="text-align: center">${e.fields.MASP}</td>
+                        <td>${e.fields.TENSP}</td>
+                        <td style="text-align: right">${e.fields.GIA}</td>
+                        <td style="text-align: right">${e.fields.total}</td>
+                    </tr>`;
+            };
+            document.getElementById("by-product").innerHTML = html_products;
+
+        }
+        report();
+    </script>
+    {% endblock content %}
