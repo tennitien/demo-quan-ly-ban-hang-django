@@ -2,7 +2,7 @@ import pymysql
 from decouple import config
 
 
-PASSWORD_MYSQL=config('PASSWORD_MYSQL')
+PASSWORD_MYSQL=config('PASSWORD_MYSQL')  # use your password in MySQL
 
 db= pymysql.connect(
     host='localhost',

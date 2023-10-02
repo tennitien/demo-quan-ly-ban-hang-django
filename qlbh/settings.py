@@ -37,11 +37,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # 'user',
     'customer',
     'employee',
     'product',
-    'user',
     'invoice',
     'invoiceDetail'
 ]
@@ -79,11 +77,11 @@ WSGI_APPLICATION = "qlbh.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-PASSWORD_MYSQL = config('PASSWORD_MYSQL')
+PASSWORD_MYSQL = config('PASSWORD_MYSQL') # use your password in MySQL
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "qlbh3",
+        "NAME": "qlbh3",  # use your databse
         "USER": "root",
         "PASSWORD": PASSWORD_MYSQL,
         "HOST": "127.0.0.1",
